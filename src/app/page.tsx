@@ -2,6 +2,8 @@
 import React from 'react';
 import { useState } from 'react';
 import fetchStockDetails from './api';
+import { FaCircleInfo } from "react-icons/fa6";
+import {IoMdClose} from "react-icons/io";
 
 interface StockData {
   days: number;
@@ -62,18 +64,24 @@ const StockSearch = () => {
         <div className="mt-8">
 
               {
-                showDetails && <div>
+                showDetails && (<div className='fixed inset-0 flex flex-col items-center rounded-lg bg-cyan-400 bg-opacity-10 p-4 backdrop-blur-md'>
+                  <button onClick={toggleDetails} className='absolute top-4 right-4 p-2 rounded-lg cursor-pointer bg-white text-black'>
+                    <IoMdClose size={20} title='close' />
+                  </button>
+                  <div className='text-center rounded-lg bg-white text-black p-4 shadow-md max-w-md w-full relative mt-20'>
                   <h2 className="text-xl font-semibold">{stockData.companyName}</h2>
                   <p><strong>Industry:</strong> {stockData.industry}</p>
                   <p>{stockData.companyProfile.companyDescription}</p> 
                 </div>
+                </div>)
               }
+
 
 
           <div className="mt-4">
             <div className='flex justify-between items-center'>
               <h3 className="text-lg font-medium">Current Price:</h3>
-              <button onClick={toggleDetails} className='p-2 bg-blue-500 text-white rounded-lg cursor-pointer'>{showDetails ? 'hide' : 'show' }</button>
+              <button onClick={toggleDetails} className='p-2 rounded-lg cursor-pointer'>{!showDetails ? <FaCircleInfo size={20} title='info' /> : '' }</button>
             </div>
 
             <p>BSE: {stockData.currentPrice.BSE}</p>
