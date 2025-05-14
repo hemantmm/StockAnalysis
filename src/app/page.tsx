@@ -1,15 +1,24 @@
-
 'use client';
 import React from 'react';
 import { useState } from 'react';
-// import fetchStockDetails from '../services/stockService';
 import fetchStockDetails from './api';
+
+interface StockData {
+  days: number;
+  bsePrice: number;
+  nsePrice: number;
+}
 
 const StockSearch = () => {
   const [stockName, setStockName] = useState('');
   const [stockData, setStockData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showDetails, setShowDetails] = useState(false);
+  
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
 
   const handleSearch = async () => {
     if (stockName) {
@@ -19,7 +28,7 @@ const StockSearch = () => {
         const data = await fetchStockDetails(stockName);
         setStockData(data);
       } catch (err) {
-        setError('Failed to fetch stock data');
+        setError('Failed to fetch stock data: ' + err);
       } finally {
         setLoading(false);
       }
@@ -38,7 +47,7 @@ const StockSearch = () => {
           onChange={(e) => setStockName(e.target.value)}
         />
         <button
-          className="p-2 bg-blue-500 text-white rounded-lg"
+          className="p-2 bg-blue-500 text-white rounded-lg cursor-pointer"
           onClick={handleSearch}
           disabled={loading}
         >
@@ -51,12 +60,22 @@ const StockSearch = () => {
 
       {stockData && !loading && (
         <div className="mt-8">
-          <h2 className="text-xl font-semibold">{stockData.companyName}</h2>
-          <p><strong>Industry:</strong> {stockData.industry}</p>
-          <p>{stockData.companyProfile.companyDescription}</p>
+
+              {
+                showDetails && <div>
+                  <h2 className="text-xl font-semibold">{stockData.companyName}</h2>
+                  <p><strong>Industry:</strong> {stockData.industry}</p>
+                  <p>{stockData.companyProfile.companyDescription}</p> 
+                </div>
+              }
+
 
           <div className="mt-4">
-            <h3 className="text-lg font-medium">Current Price:</h3>
+            <div className='flex justify-between items-center'>
+              <h3 className="text-lg font-medium">Current Price:</h3>
+              <button onClick={toggleDetails} className='p-2 bg-blue-500 text-white rounded-lg cursor-pointer'>{showDetails ? 'hide' : 'show' }</button>
+            </div>
+
             <p>BSE: {stockData.currentPrice.BSE}</p>
             <p>NSE: {stockData.currentPrice.NSE}</p>
           </div>
@@ -64,7 +83,7 @@ const StockSearch = () => {
           <div className="mt-4">
             <h3 className="text-lg font-medium">Stock Technical Data:</h3>
             <ul>
-              {stockData.stockTechnicalData.map((item: any, index: number) => (
+              {stockData.stockTechnicalData.map((item: StockData, index: number) => (
                 <li key={index}>
                   <span>{item.days} Days: </span>
                   <span>BSE: {item.bsePrice}</span> | <span>NSE: {item.nsePrice}</span>
