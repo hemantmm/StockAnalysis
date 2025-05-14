@@ -1,6 +1,6 @@
-'use client';import React, { useState } from 'react';
-// import { fetchStockDetails } from '../lib/api';
-import { fetchStockDetails } from './api';
+'use client';
+import React, { useState } from 'react';
+import fetchStockDetails from './api';
 
 const StockSearch: React.FC = () => {
   const [stockName, setStockName] = useState<string>('');

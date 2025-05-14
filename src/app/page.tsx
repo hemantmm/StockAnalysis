@@ -4,6 +4,8 @@ import { useState } from 'react';
 import fetchStockDetails from './api';
 import { FaCircleInfo } from "react-icons/fa6";
 import {IoMdClose} from "react-icons/io";
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { FaArrowTrendDown } from "react-icons/fa6";
 
 interface StockData {
   days: number;
@@ -64,19 +66,17 @@ const StockSearch = () => {
         <div className="mt-8">
 
               {
-                showDetails && (<div className='fixed inset-0 flex flex-col items-center rounded-lg bg-cyan-400 bg-opacity-10 p-4 backdrop-blur-md'>
+                showDetails && (<div className='fixed inset-0 flex flex-col items-center rounded-lg bg-cyan-400 bg-opacity-10 backdrop-blur-md'>
                   <button onClick={toggleDetails} className='absolute top-4 right-4 p-2 rounded-lg cursor-pointer bg-white text-black'>
                     <IoMdClose size={20} title='close' />
                   </button>
-                  <div className='text-center rounded-lg bg-white text-black p-4 shadow-md max-w-md w-full relative mt-20'>
-                  <h2 className="text-xl font-semibold">{stockData.companyName}</h2>
-                  <p><strong>Industry:</strong> {stockData.industry}</p>
-                  <p>{stockData.companyProfile.companyDescription}</p> 
-                </div>
+                  <div className='text-center rounded-lg bg-white text-black p-4 shadow-md max-w-md w-full mt-20'>
+                    <h2 className="text-xl font-semibold">{stockData.companyName}</h2>
+                    <p><strong>Industry:</strong> {stockData.industry}</p>
+                    <p>{stockData.companyProfile.companyDescription}</p> 
+                  </div>
                 </div>)
               }
-
-
 
           <div className="mt-4">
             <div className='flex justify-between items-center'>
@@ -84,8 +84,12 @@ const StockSearch = () => {
               <button onClick={toggleDetails} className='p-2 rounded-lg cursor-pointer'>{!showDetails ? <FaCircleInfo size={20} title='info' /> : '' }</button>
             </div>
 
-            <p>BSE: {stockData.currentPrice.BSE}</p>
-            <p>NSE: {stockData.currentPrice.NSE}</p>
+              <p className='text-lg font-semibold flex'>
+                NSE: {stockData.currentPrice.NSE} 
+                <span className={`ml-4 flex items-center ${stockData.percentChange > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {stockData.percentChange > 0 ? <FaArrowTrendUp /> : <FaArrowTrendDown size={20} />} &nbsp;{stockData.percentChange} %
+                </span>
+              </p>
           </div>
 
           <div className="mt-4">
