@@ -20,6 +20,8 @@ const StockSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showDetails, setShowDetails] = useState(false);
+  const [stockPriceData, setStockPriceData] = useState<Array<[string,string]>>([]);
+
   
   const toggleDetails = () => {
     setShowDetails(!showDetails);
@@ -31,7 +33,9 @@ const StockSearch = () => {
       setError('');
       try {
         const data = await fetchStockDetails(stockName);
+        const historicalData= await fetchStockData(stockName);
         setStockData(data);
+        setStockPriceData(historicalData.datasets[0].values);
       } catch (err) {
         setError('Failed to fetch stock data: ' + err);
       } finally {
@@ -39,6 +43,7 @@ const StockSearch = () => {
       }
     }
   };
+  
 
   return (
     <div className="max-w-lg mx-auto p-4">
@@ -106,6 +111,31 @@ const StockSearch = () => {
           </div>
         </div>
       )}
+
+      {
+        stockPriceData.length > 0 && !loading && (
+          <div className="mt-4">
+            <h3 className="text-lg font-medium">Stock Price Data:</h3>
+            <table className="w-full mt-2 table-auto">
+              <thead>
+                <tr>
+                  <th className="border px-4 py-2">Date</th>
+                  <th className="border px-4 py-2">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stockPriceData.map((data, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{data[0]}</td>
+                    <td className="border px-4 py-2">{data[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+
     </div>
   );
 };
