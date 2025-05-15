@@ -14,6 +14,8 @@ interface StockData {
   nsePrice: number;
 }
 
+const periodWiseOptions = ['1m', '6m', '1yr', '3yr', '5yr', '10yr', 'max'];
+
 const StockSearch = () => {
   const [stockName, setStockName] = useState('');
   const [stockData, setStockData] = useState<any>(null);
@@ -21,7 +23,7 @@ const StockSearch = () => {
   const [error, setError] = useState('');
   const [showDetails, setShowDetails] = useState(false);
   const [stockPriceData, setStockPriceData] = useState<Array<[string,string]>>([]);
-
+  const [periodWise, setPeriodWise] = useState('1m');
   
   const toggleDetails = () => {
     setShowDetails(!showDetails);
@@ -33,7 +35,7 @@ const StockSearch = () => {
       setError('');
       try {
         const data = await fetchStockDetails(stockName);
-        const historicalData= await fetchStockData(stockName);
+        const historicalData= await fetchStockData(stockName, periodWise);
         setStockData(data);
         setStockPriceData(historicalData.datasets[0].values);
       } catch (err) {
@@ -43,7 +45,6 @@ const StockSearch = () => {
       }
     }
   };
-  
 
   return (
     <div className="max-w-lg mx-auto p-4">
@@ -56,6 +57,18 @@ const StockSearch = () => {
           value={stockName}
           onChange={(e) => setStockName(e.target.value)}
         />
+        <select
+          className="p-2 border border-gray-300 rounded-lg"
+          value={periodWise}
+          onChange={(e) => setPeriodWise(e.target.value)}
+        >
+          {periodWiseOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+
         <button
           className="p-2 bg-blue-500 text-white rounded-lg cursor-pointer"
           onClick={handleSearch}

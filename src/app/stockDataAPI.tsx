@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const fetchStockData = async(stockName:string)=>{
+const fetchStockData = async(stockName:string, periodWise:string)=>{
 const options = {
   method: 'GET',
   url: 'https://indian-stock-exchange-api2.p.rapidapi.com/historical_data',
   params: {
     stock_name: stockName,
-    period: '1m',
+    period: periodWise,
     filter: 'price'
   },
   headers: {
