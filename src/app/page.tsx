@@ -1,11 +1,12 @@
 'use client';
 import React from 'react';
 import { useState } from 'react';
-import fetchStockDetails from './api';
+import fetchStockDetails from './stockNameAPI';
 import { FaCircleInfo } from "react-icons/fa6";
 import {IoMdClose} from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
+import fetchStockData from './stockDataAPI';
 
 interface StockData {
   days: number;
