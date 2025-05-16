@@ -7,6 +7,11 @@ import {IoMdClose} from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import fetchStockData from './stockDataAPI';
+import {Chart as ChartJS, LineElement, LinearScale, CategoryScale, PointElement, Tooltip,Legend} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(LineElement, LinearScale, CategoryScale, PointElement, Tooltip, Legend);
+
 
 interface StockData {
   days: number;
@@ -129,22 +134,45 @@ const StockSearch = () => {
         stockPriceData.length > 0 && !loading && (
           <div className="mt-4">
             <h3 className="text-lg font-medium">Stock Price Data:</h3>
-            <table className="w-full mt-2 table-auto">
-              <thead>
-                <tr>
-                  <th className="border px-4 py-2">Date</th>
-                  <th className="border px-4 py-2">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stockPriceData.map((data, index) => (
-                  <tr key={index}>
-                    <td className="border px-4 py-2">{data[0]}</td>
-                    <td className="border px-4 py-2">{data[1]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <Line
+              data={{
+                labels: stockPriceData.map(([date]) => date),
+                datasets: [
+                  {
+                    label: 'Stock Price',
+                    data: stockPriceData.map(([, price]) => parseFloat(price)),
+                    tension: 0.1,
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: 'top',
+                  },
+                },
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Date',
+                    },
+                  },
+                  y: {
+                    title: {
+                      display: true,
+                      text: 'Price',
+                    },
+                    beginAtZero: false,
+                  },
+                },
+              }}
+            />
           </div>
         )
       }
