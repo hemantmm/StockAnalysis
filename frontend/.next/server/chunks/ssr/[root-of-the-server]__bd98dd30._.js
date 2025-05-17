@@ -117,26 +117,6 @@ module.exports = mod;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-// import axios from 'axios';
-// const fetchStockDetails = async (stockName: string) => {
-//   const options = {
-//     method: 'GET',
-//     url: 'https://indian-stock-exchange-api2.p.rapidapi.com/stock',
-//     params: { name: stockName },
-//     headers: {
-//       'x-rapidapi-key': '58bd41ce1fmsh31b5e8f15a000cap163672jsn746bd60990a2',
-//       'x-rapidapi-host': 'indian-stock-exchange-api2.p.rapidapi.com'
-//     }
-//   };
-//   try {
-//     const response = await axios.request(options);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching stock details:', error);
-//     throw error;
-//   }
-// };
-// export default fetchStockDetails;
 __turbopack_context__.s({
     "default": (()=>__TURBOPACK__default__export__)
 });
@@ -169,30 +149,6 @@ const __TURBOPACK__default__export__ = fetchStockDetails;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-// import axios from "axios";
-// const fetchStockData = async(stockName:string, periodWise:string)=>{
-// const options = {
-//   method: 'GET',
-//   url: 'https://indian-stock-exchange-api2.p.rapidapi.com/historical_data',
-//   params: {
-//     stock_name: stockName,
-//     period: periodWise,
-//     filter: 'price'
-//   },
-//   headers: {
-//     'x-rapidapi-key': '58bd41ce1fmsh31b5e8f15a000cap163672jsn746bd60990a2',
-//     'x-rapidapi-host': 'indian-stock-exchange-api2.p.rapidapi.com'
-//   }
-// };
-// try {
-// 	const response = await axios.request(options);
-// 	console.log(response.data);
-//     return response.data;
-// }catch (error) {
-// 	console.error(error);
-// }
-// };
-// export default fetchStockData
 __turbopack_context__.s({
     "default": (()=>__TURBOPACK__default__export__)
 });
