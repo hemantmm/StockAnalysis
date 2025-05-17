@@ -1,0 +1,49 @@
+// import axios from 'axios';
+
+// const fetchStockDetails = async (stockName: string) => {
+//   const options = {
+//     method: 'GET',
+//     url: 'https://indian-stock-exchange-api2.p.rapidapi.com/stock',
+//     params: { name: stockName },
+//     headers: {
+//       'x-rapidapi-key': '58bd41ce1fmsh31b5e8f15a000cap163672jsn746bd60990a2',
+//       'x-rapidapi-host': 'indian-stock-exchange-api2.p.rapidapi.com'
+//     }
+//   };
+
+//   try {
+//     const response = await axios.request(options);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error fetching stock details:', error);
+//     throw error;
+//   }
+// };
+
+// export default fetchStockDetails;
+
+
+import axios from 'axios';
+
+const API_KEY = 'sk-live-wcgA1sqh67uosD0RtHMeJBEUrhxR5nBUyVBHbXpI'; // Your new IndianAPI key
+
+const fetchStockDetails = async (stockName: string) => {
+  const options = {
+    method: 'GET',
+    url: 'https://stock.indianapi.in/stock',
+    params: { name: stockName },
+    headers: {
+      'X-Api-Key': API_KEY
+    }
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching stock details:', error);
+    throw error;
+  }
+};
+
+export default fetchStockDetails;
